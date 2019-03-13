@@ -56,6 +56,10 @@ public class MainActivity extends AppCompatActivity {
                 Toast.LENGTH_SHORT);
         toast.show();
 
+        if(id == R.id.item_async) {
+            new SleeperTask(this.helloView).execute();
+        }
+
         return super.onOptionsItemSelected(item);
     }
 
