@@ -3,6 +3,10 @@ package hu.szte.mobilalk.maf_02;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Message;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -14,7 +18,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity
+    implements LoaderManager.LoaderCallbacks<String> {
 
     private int counter;
     private TextView counterView;
@@ -43,6 +48,11 @@ public class MainActivity extends AppCompatActivity {
         } else {
             this.counter = 0;
         }
+
+        if(getSupportLoaderManager().getLoader(0) != null) {
+            getSupportLoaderManager().initLoader(0, null,
+                    this);
+        }
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -57,7 +67,9 @@ public class MainActivity extends AppCompatActivity {
         toast.show();
 
         if(id == R.id.item_async) {
-            new SleeperTask(this.helloView).execute();
+            //new SleeperTask(this.helloView).execute();
+            getSupportLoaderManager().restartLoader(0, null,
+                    this);
         }
 
         return super.onOptionsItemSelected(item);
@@ -112,5 +124,21 @@ public class MainActivity extends AppCompatActivity {
                 helloView.setText(reply);
             }
         }
+    }
+
+    @NonNull
+    @Override
+    public Loader<String> onCreateLoader(int i, @Nullable Bundle bundle) {
+        return  new SleeperLoader(this);
+    }
+
+    @Override
+    public void onLoadFinished(@NonNull Loader<String> loader, String s) {
+        this.helloView.setText(s);
+    }
+
+    @Override
+    public void onLoaderReset(@NonNull Loader<String> loader) {
+
     }
 }
