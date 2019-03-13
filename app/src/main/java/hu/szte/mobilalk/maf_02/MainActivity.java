@@ -134,7 +134,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onLoadFinished(@NonNull Loader<String> loader, String s) {
-        this.helloView.setText(s);
+        helloView.setText(s);
     }
 
     @Override

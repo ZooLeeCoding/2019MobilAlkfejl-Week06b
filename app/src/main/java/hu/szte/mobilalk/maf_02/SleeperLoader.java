@@ -3,6 +3,7 @@ package hu.szte.mobilalk.maf_02;
 import android.content.Context;
 import android.support.annotation.Nullable;
 import android.support.v4.content.AsyncTaskLoader;
+import android.util.Log;
 
 import java.util.Random;
 
@@ -30,7 +31,7 @@ public class SleeperLoader extends AsyncTaskLoader<String> {
         } catch(InterruptedException e) {
             e.printStackTrace();
         }
-
+        Log.d("SLEEPER", String.valueOf(n));
         return "I have slept for " + n + " seconds";
     }
 }
